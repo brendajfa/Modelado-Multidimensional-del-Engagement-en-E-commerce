@@ -25,7 +25,7 @@ El proyecto está dividido en notebooks que siguen el flujo de la metodología:
 3.  **Modeling:** Implementación del pipeline de Spectral Clustering con múltiples inicializaciones para asegurar robustez.
 4.  **Business Impact:** Vinculación de los clusters con métricas financieras como el **GMV (Gross Merchandise Value)** y el análisis del embudo de conversión.
 
-/
+```
 ├── data/               # (Nota: No subir los 67M de eventos, solo muestras o scripts de descarga)
 │   ├── raw/            # Enlaces a los datasets originales (Kaggle)
 │   └── processed/      # Bases agregadas (General, User-based, Time-based)
@@ -65,7 +65,7 @@ El proyecto está dividido en notebooks que siguen el flujo de la metodología:
 ├── .gitignore          # Para evitar subir archivos temporales o datos pesados
 ├── requirements.txt    # Librerías necesarias (pandas, scikit-learn, etc.)
 └── README.md           # Descripción principal del proyecto
-
+```
 
 
 
