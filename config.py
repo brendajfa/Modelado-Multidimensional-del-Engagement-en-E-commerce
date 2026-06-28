@@ -132,7 +132,7 @@ CATEGORIES_CODES = [
 
 WORKPATH = "data"
 # Google Drive
-# WORKPATH = "drive/MyDrive/Master Data Science/TFM"
+# WORKPATH = "drive/MyDrive/Master Data Science/TFM/GITHUB"
 
 
 FEATURES_GENERIC = [
