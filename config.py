@@ -133,3 +133,26 @@ CATEGORIES_CODES = [
 WORKPATH = "data"
 # Google Drive
 # WORKPATH = "drive/MyDrive/Master Data Science/TFM"
+
+
+FEATURES_GENERIC = [
+]
+
+
+FEATURES_USER_BASED = [
+]
+
+
+FEATURES_TIME_BASED = [
+    "users",
+    "visits",
+    "clicks",
+    "click_depth",
+    "dwell_time_avg",
+    "return_rate",
+    "dwelltime_l",
+]
+
+CLUSTER_GENERIC = 3
+CLUSTER_USER_BASED = 5
+CLUSTER_TIME_BASED = 3

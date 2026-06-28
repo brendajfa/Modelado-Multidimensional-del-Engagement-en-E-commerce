@@ -6,22 +6,6 @@ import os
 import config
 
 
-class EngagementScaler:
-    def __init__(self):
-        self.means = None
-        self.stds = None
-
-    def fit(self, df):
-        # Calcula estadísticas de Noviembre
-        self.means = df.mean()
-        self.stds = df.std()
-
-    def transform(self, df):
-        # Aplica Rank-dense y Z-score usando las estadísticas guardadas
-        df_ranked = df.rank(method='dense')
-        return (df_ranked - self.means) / self.stds
-
-
 class PreprocessorBase(ABC):
     """Clase base abstracta para los diferentes tipos de preprocesamiento."""
     
