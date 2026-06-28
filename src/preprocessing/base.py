@@ -30,7 +30,7 @@ class PreprocessorBase(ABC):
         pass
     
     @abstractmethod
-    def _get_output_path(self) -> str:
+    def _get_output_path(self, train_eval: str) -> str:
         """Retorna la ruta del archivo de salida."""
         pass
     
@@ -53,12 +53,12 @@ class PreprocessorBase(ABC):
             rows.append(row_dict)
 
         self.metrics_df = pd.DataFrame(rows)
-        self._save_results()
+        self._save_results(train_eval)
         return self.metrics_df
 
-    def _save_results(self):
+    def _save_results(self, train_eval: str):
         """Guarda los resultados en la ruta especificada."""
-        output_path = self._get_output_path()
+        output_path = self._get_output_path(train_eval)
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         self.metrics_df.to_parquet(output_path)
         print(f"Resultados guardados en: {output_path}")

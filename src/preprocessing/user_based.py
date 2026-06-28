@@ -1,7 +1,6 @@
 import pandas as pd
 from src.preprocessing.base import PreprocessorBase
 import os
-import src.config as config
 
 
 class UserBasedPreprocessor(PreprocessorBase):
@@ -19,8 +18,8 @@ class UserBasedPreprocessor(PreprocessorBase):
     def _get_input_path(self, category_code: str, train_eval: str) -> str:
         return os.path.join(self.workpath, "categories", train_eval, f"{category_code}.parquet")
     
-    def _get_output_path(self) -> str:
-        return os.path.join(self.workpath, "processed", "user_based_metrics.parquet")
+    def _get_output_path(self, train_eval: str) -> str:
+        return os.path.join(self.workpath, "processed", train_eval, "user_based_metrics.parquet")
     
     def _prepare_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
         """Prepara el dataframe agregando clasificación de usuarios."""

@@ -9,7 +9,7 @@ class GeneralPreprocessor(PreprocessorBase):
     
     def _define_reference(self):
         """En el modelo general no hay grupos de referencia."""
-        self.referencia = pd.DataFrame({"category_code": config.CATEGORY_CODES})
+        self.referencia = pd.DataFrame({"category_code": config.CATEGORIES_CODES})
 
     def _get_identifier_column(self) -> str:
         return "category_code"
@@ -17,8 +17,8 @@ class GeneralPreprocessor(PreprocessorBase):
     def _get_input_path(self, category_code: str, train_eval: str) -> str:
         return os.path.join(self.workpath, "categories", train_eval, f"{category_code}.parquet")
 
-    def _get_output_path(self) -> str:
-        return os.path.join(self.workpath, "processed", "general_metrics.parquet")
+    def _get_output_path(self, train_eval: str) -> str:
+        return os.path.join(self.workpath, "processed", train_eval, "aggregated_generic.parquet")
 
     def _calculate_metrics(self, df: pd.DataFrame) -> dict:
         """Calcula métricas generales por categoría."""
@@ -33,11 +33,11 @@ class GeneralPreprocessor(PreprocessorBase):
 
     def _calc_popularity(self, df: pd.DataFrame) -> dict:
         """Calcula métricas de popularidad."""
-        total_views = len(df[df["event_type"] == "view"])
+        total_visits = df["user_session"].nunique()
         unique_users = df["user_id"].nunique()
-        total_clicks = len(df[df["event_type"] == "click"])
+        total_clicks = len(df[df["event_type"] == "view"])
         return {
-            "views": total_views,
+            "visits": total_visits,
             "users": unique_users,
             "clicks": total_clicks,
         }
@@ -45,7 +45,7 @@ class GeneralPreprocessor(PreprocessorBase):
     def _calc_activity(self, df: pd.DataFrame) -> dict:
         """Calcula métricas de actividad."""
         return {
-            "clicks_depth": self._calc_click_depth(df),
+            "click_depth": self._calc_click_depth(df),
             "dwell_time_avg": self._calc_dwelltime_avg(df),
         }
 

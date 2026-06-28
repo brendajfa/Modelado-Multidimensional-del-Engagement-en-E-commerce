@@ -18,15 +18,15 @@ class TimeBasedPreprocessor(PreprocessorBase):
     def _get_input_path(self, category_code: str, train_eval: str) -> str:
         return os.path.join(self.workpath, "categories", train_eval, f"{category_code}.parquet")
 
-    def _get_output_path(self) -> str:
-        return os.path.join(self.workpath, "processed", "time_based_metrics.parquet")
+    def _get_output_path(self, train_eval: str) -> str:
+        return os.path.join(self.workpath, "processed", train_eval, "time_based_metrics.parquet")
 
     def _prepare_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
         """Prepara el dataframe agregando clasificación temporal."""
         df["event_time"] = pd.to_datetime(df["event_time"])
         df["event_day"] = pd.to_datetime(df["event_day"])
         df["day_of_week"] = df["event_day"].dt.dayofweek
-        df["time_period"] = df["day_of_week"].apply(lambda x: "Weekend" if x >= 5 else "Weekday")
+        df["is_weekend"] = df["day_of_week"].apply(lambda x: True if x >= 5 else False)
         return df
 
     def _ratio_weekday_vs_weekend(self, weekday_value, weekend_value):
