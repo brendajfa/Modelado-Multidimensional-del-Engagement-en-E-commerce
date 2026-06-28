@@ -35,5 +35,5 @@ class KendallTauSimilarity:
     
     def fit_transform(self, df_normalized: pd.DataFrame, features: list) -> pd.DataFrame:
         """Ajusta, calcula similitud y transforma a afinidad en un solo paso."""
-        self.fit(df_normalized, features)
-        return self.transform(df_normalized, features)
+        similarity_matrix = self.fit(df_normalized, features)
+        return self.transform(similarity_matrix)

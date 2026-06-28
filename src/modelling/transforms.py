@@ -6,30 +6,37 @@ class EngagementScaler:
         self.means = None
         self.stds = None
         self.features = features
-    
+
     def _preprocess(self, df: pd.DataFrame) -> pd.DataFrame:
-        if "MergeUE" in df.columns:
+        if "MergeUE" in self.features:
             df["MergeUE"] = df["users"] + df["visits"] + df["clicks"]
         return df
 
-    def fit(self, df) -> pd.DataFrame:
-        # Calcula estadísticas de Noviembre
+    def _rank(self, df: pd.DataFrame) -> pd.DataFrame:
         df_ranked = df.copy()
-        df_ranked[self.features] = df_ranked[self.features].rank(method='dense')
-        df_ranked = self._preprocess(df_ranked)
-        self.means = df_ranked.mean()
-        self.stds = df_ranked.std()
+        df_ranked[self.features] = df_ranked[self.features].rank(method="dense")
         return df_ranked
 
-    def transform(self, df_ranked: pd.DataFrame) -> pd.DataFrame:
-        """Aplica Z-score usando estadísticas guardadas."""
+    def rank(self, df: pd.DataFrame) -> pd.DataFrame:
+        return self._rank(self._preprocess(df.copy()))
+
+    def fit(self, df: pd.DataFrame) -> pd.DataFrame:
+        df_pre = self._preprocess(df.copy())
+        df_ranked = self._rank(df_pre)
+        self.means = df_ranked[self.features].mean()
+        self.stds = df_ranked[self.features].std()
+        return df_ranked
+
+    def transform(self, df: pd.DataFrame) -> pd.DataFrame:
+        if self.means is None or self.stds is None:
+            raise ValueError("Debes llamar a fit() antes de transform()")
+
+        df_pre = self._preprocess(df.copy())
+        df_ranked = self._rank(df_pre)
         df_normalized = df_ranked.copy()
-        df_normalized = self._preprocess(df_normalized)
-        df_normalized[self.features] = (df_normalized[self.features] - self.means) / self.stds
-        df_normalized = df_normalized.fillna(0)
-        return df_normalized
-    
+        df_normalized[self.features] = (df_ranked[self.features] - self.means) / self.stds
+        return df_normalized.fillna(0)
+
     def fit_transform(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Ajusta y transforma en un solo paso."""
         df_ranked = self.fit(df)
         return self.transform(df_ranked)
