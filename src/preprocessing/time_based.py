@@ -11,16 +11,16 @@ class TimeBasedPreprocessor(PreprocessorBase):
         self.referencia = pd.DataFrame({
             "time_period": ["Weekday", "Weekend"]
         })
-    
+
     def _get_identifier_column(self) -> str:
         return "category_code"
-    
-    def _get_input_path(self, category_code: str) -> str:
-        return os.path.join(self.workpath, "categories", f"{category_code}.parquet")
-    
+
+    def _get_input_path(self, category_code: str, train_eval: str) -> str:
+        return os.path.join(self.workpath, "categories", train_eval, f"{category_code}.parquet")
+
     def _get_output_path(self) -> str:
         return os.path.join(self.workpath, "processed", "time_based_metrics.parquet")
-    
+
     def _prepare_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
         """Prepara el dataframe agregando clasificación temporal."""
         df["event_time"] = pd.to_datetime(df["event_time"])
@@ -32,12 +32,12 @@ class TimeBasedPreprocessor(PreprocessorBase):
     def _ratio_weekday_vs_weekend(self, weekday_value, weekend_value):
         total = weekday_value + weekend_value
         return 0.0 if total == 0 else weekday_value / total
-    
+
     def _calculate_metrics(self, df: pd.DataFrame) -> dict:
         """Calcula métricas por período temporal."""
         df = self._prepare_dataframe(df)
         metrics = {}
-        
+
         metrics.update({"users": self._calc_popularity(df, "user_id", "nunique")})
         metrics.update({"visits": self._calc_popularity(df, "user_session", "nunique")})
         metrics.update({"clicks": self._calc_popularity(df, event_type="view")})

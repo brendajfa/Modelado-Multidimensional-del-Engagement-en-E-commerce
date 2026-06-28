@@ -25,7 +25,7 @@ class PreprocessorBase(ABC):
         pass
     
     @abstractmethod
-    def _get_input_path(self, identifier: str) -> str:
+    def _get_input_path(self, identifier: str, train_eval: str) -> str:
         """Retorna la ruta del archivo de entrada según el identificador."""
         pass
     
@@ -34,35 +34,35 @@ class PreprocessorBase(ABC):
         """Retorna la ruta del archivo de salida."""
         pass
     
-    def process(self):
+    def process(self, train_eval: str) -> pd.DataFrame:
         """Pipeline principal de procesamiento."""
         self._define_reference()
         rows = []
         
-        for identifier in tqdm(config.CATEGORY_CODES):
-            input_path = self._get_input_path(identifier)
+        for identifier in tqdm(config.CATEGORIES_CODES):
+            input_path = self._get_input_path(identifier, train_eval)
             df = pd.read_parquet(input_path)
             print(f"Procesando: {identifier}")
-            
+
             # Diccionario base con el identificador
             row_dict = {self._get_identifier_column(): identifier}
-            
+
             # Calcula métricas específicas
             metrics = self._calculate_metrics(df)
             row_dict.update(metrics)
             rows.append(row_dict)
-        
+
         self.metrics_df = pd.DataFrame(rows)
         self._save_results()
         return self.metrics_df
-    
+
     def _save_results(self):
         """Guarda los resultados en la ruta especificada."""
         output_path = self._get_output_path()
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         self.metrics_df.to_parquet(output_path)
         print(f"Resultados guardados en: {output_path}")
-    
+
     @abstractmethod
     def _get_identifier_column(self) -> str:
         """Retorna el nombre de la columna identificadora."""

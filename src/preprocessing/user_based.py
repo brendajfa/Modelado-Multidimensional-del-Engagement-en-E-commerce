@@ -16,8 +16,8 @@ class UserBasedPreprocessor(PreprocessorBase):
     def _get_identifier_column(self) -> str:
         return "category_code"
     
-    def _get_input_path(self, category_code: str) -> str:
-        return os.path.join(self.workpath, "categories", f"{category_code}.parquet")
+    def _get_input_path(self, category_code: str, train_eval: str) -> str:
+        return os.path.join(self.workpath, "categories", train_eval, f"{category_code}.parquet")
     
     def _get_output_path(self) -> str:
         return os.path.join(self.workpath, "processed", "user_based_metrics.parquet")

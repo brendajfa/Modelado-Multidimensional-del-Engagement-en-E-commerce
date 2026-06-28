@@ -28,7 +28,6 @@ class KendallTauSimilarity:
         if similarity_matrix is None:
             raise ValueError("Debe ejecutar fit() primero")
         
-        # Convierte rango [-1, 1] a [0, 1] para SpectralClustering
         affinity_matrix = (1 + similarity_matrix) / 2
         
         return affinity_matrix

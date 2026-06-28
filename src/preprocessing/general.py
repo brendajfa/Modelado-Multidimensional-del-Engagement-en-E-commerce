@@ -10,27 +10,27 @@ class GeneralPreprocessor(PreprocessorBase):
     def _define_reference(self):
         """En el modelo general no hay grupos de referencia."""
         self.referencia = pd.DataFrame({"category_code": config.CATEGORY_CODES})
-    
+
     def _get_identifier_column(self) -> str:
         return "category_code"
-    
-    def _get_input_path(self, category_code: str) -> str:
-        return os.path.join(self.workpath, "categories", f"{category_code}.parquet")
-    
+
+    def _get_input_path(self, category_code: str, train_eval: str) -> str:
+        return os.path.join(self.workpath, "categories", train_eval, f"{category_code}.parquet")
+
     def _get_output_path(self) -> str:
         return os.path.join(self.workpath, "processed", "general_metrics.parquet")
-    
+
     def _calculate_metrics(self, df: pd.DataFrame) -> dict:
         """Calcula métricas generales por categoría."""
         metrics = {}
-        
+
         # Ejemplos de métricas generales
         metrics.update(self._calc_popularity(df))
         metrics.update(self._calc_activity(df))
         metrics.update(self._calc_loyalty(df))
-        
+
         return metrics
-    
+
     def _calc_popularity(self, df: pd.DataFrame) -> dict:
         """Calcula métricas de popularidad."""
         total_views = len(df[df["event_type"] == "view"])
@@ -41,7 +41,7 @@ class GeneralPreprocessor(PreprocessorBase):
             "users": unique_users,
             "clicks": total_clicks,
         }
-    
+
     def _calc_activity(self, df: pd.DataFrame) -> dict:
         """Calcula métricas de actividad."""
         return {
@@ -61,7 +61,6 @@ class GeneralPreprocessor(PreprocessorBase):
         dwell_time_a = session_durations.mean().total_seconds()
         return dwell_time_a
 
-    
     def _calc_loyalty(self, df: pd.DataFrame) -> dict:
         """Calcula métricas de lealtad."""
         return {
