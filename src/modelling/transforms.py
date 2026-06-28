@@ -2,7 +2,7 @@ import pandas as pd
 
 
 class EngagementScaler:
-    def __init__(self, features):
+    def __init__(self, features: list):
         self.means = None
         self.stds = None
         self.features = features
@@ -26,29 +26,3 @@ class EngagementScaler:
         """Ajusta y transforma en un solo paso."""
         df_ranked = self.fit(df)
         return self.transform(df_ranked)
-
-
-# 1. Convertir a ordinal (ranking)
-df_ranked = metrics.copy()
-df_ranked[cols] = df_ranked[cols].rank(method="dense")
-
-# 2. Normalizar con Z-score
-df_norm = df_ranked.copy()
-df_norm[cols] = (df_norm[cols] - df_norm[cols].mean()) / df_norm[cols].std()
-
-df_norm = df_norm.fillna(0)
-matriz_corr = df_norm[cols].T.corr(method='kendall')
-
-matriz_corr = matriz_corr.fillna(0)
-
-# 5. TRANSFORMACIÓN A AFINIDAD POSITIVA:
-# Convertir rango [-1, 1] a [3] para que SpectralClustering funcione
-matriz_afinidad = (1 + matriz_corr) / 2
-from sklearn.cluster import SpectralClustering
-
-model = SpectralClustering(n_clusters=n_clusters,
-                           affinity='precomputed',
-                           assign_labels='kmeans',
-                           n_init=50)
-
-clusters = model.fit_predict(matriz_afinidad)

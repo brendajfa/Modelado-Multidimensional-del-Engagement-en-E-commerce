@@ -1,12 +1,19 @@
 import numpy as np
 import pandas as pd
 from sklearn.cluster import SpectralClustering
+from scipy.spatial.distance import cdist
 
 
 class SpectralClusteringModel:
     """Pipeline de Clustering Espectral con validaciones y persistencia de centroides."""
     
-    def __init__(self, n_clusters: int, n_init: int = 50, random_state: int = 42):
+    def __init__(
+            self,
+            n_clusters: int,
+            n_init: int = 50,
+            random_state: int = 42,
+            spatial_distance_metric: str = "euclidean"
+    ):
         self.n_clusters = n_clusters
         self.n_init = n_init
         self.random_state = random_state
@@ -16,6 +23,7 @@ class SpectralClusteringModel:
         self.centroids = None
         self.train_rank_means = None
         self.train_rank_stds = None
+        self.spatial_distance_metric = spatial_distance_metric
     
     def fit(self, affinity_matrix: np.ndarray, df_normalized: pd.DataFrame = None, 
             features: list = None) -> np.ndarray:
@@ -85,6 +93,10 @@ class SpectralClusteringModel:
         self.n_clusters = artifacts['n_clusters']
         print(f"Artefactos cargados desde: {filepath}")
     
-    def fit_predict(self, affinity_matrix: np.ndarray) -> np.ndarray:
-        """Ajusta y predice en un solo paso."""
-        return self.fit(affinity_matrix)
+    # def fit_predict(self, affinity_matrix: np.ndarray) -> np.ndarray:
+    #     """Ajusta y predice en un solo paso."""
+    #     return self.fit(affinity_matrix)
+
+    def predict(self, predict_values) -> np.ndarray:
+        dists = cdist(predict_values, self.centroids, metric=self.spatial_distance_metric)
+        return np.argmin(dists, axis=1)

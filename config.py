@@ -136,10 +136,59 @@ WORKPATH = "data"
 
 
 FEATURES_GENERIC = [
+    "users",
+    "visits",
+    "clicks",
+    "click_depth",
+    "dwell_time_avg",
+    "active_days",
+    "return_rate",
+    "dwelltime_l",
+    "MergeUE"
 ]
 
 
 FEATURES_USER_BASED = [
+    "Tourist_users",
+    "Interested_users",
+    "Average_users",
+    "Active_users",
+    "VIP_users",
+    "Tourist_visits",
+    "Interested_visits",
+    "Average_visits",
+    "Active_visits",
+    "VIP_visits",
+    "Tourist_clicks",
+    "Interested_clicks",
+    "Average_clicks",
+    "Active_clicks",
+    "VIP_clicks",
+    "Tourist_click_depth",
+    "Interested_click_depth",
+    "Average_click_depth",
+    "Active_click_depth",
+    "VIP_click_depth",
+    "Tourist_dwelltime_avg",
+    "Interested_dwelltime_avg",
+    "Average_dwelltime_avg",
+    "Active_dwelltime_avg",
+    "VIP_dwelltime_avg",
+    "Tourist_active_days",
+    "Interested_active_days",
+    "Average_active_days",
+    "Active_active_days",
+    "VIP_active_days",
+    "Tourist_return_rate",
+    "Interested_return_rate",
+    "Average_return_rate",
+    "Active_return_rate",
+    "VIP_return_rate",
+    "Tourist_dwelltime_l",
+    "Interested_dwelltime_l",
+    "Average_dwelltime_l",
+    "Active_dwelltime_l",
+    "VIP_dwelltime_l",
 ]
 
 
