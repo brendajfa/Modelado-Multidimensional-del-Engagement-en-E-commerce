@@ -1,7 +1,7 @@
 import pandas as pd
 from src.preprocessing.base import PreprocessorBase
 import os
-import config
+import src.config as config
 
 
 class UserBasedPreprocessor(PreprocessorBase):

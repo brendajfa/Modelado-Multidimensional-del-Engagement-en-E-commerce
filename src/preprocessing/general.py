@@ -1,5 +1,5 @@
 from src.preprocessing.base import PreprocessorBase
-import config
+import src.config as config
 import pandas as pd
 import os
 

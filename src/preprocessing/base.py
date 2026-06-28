@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 import pandas as pd
 from tqdm import tqdm
 import os
-import config
+import src.config as config
 
 
 class PreprocessorBase(ABC):

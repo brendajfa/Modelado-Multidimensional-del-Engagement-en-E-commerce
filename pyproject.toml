@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=65.5.1", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "modelado-multidimensional-engagement"
+version = "0.1.0"
+description = "Modelado multidimensional del engagement en e-commerce"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+  { name = "Brenda Fernández Alayo", email = "breferala99@gmail.com" }
+]
+dependencies = [
+  "pandas",
+  "numpy",
+  "scikit-learn",
+  "scipy",
+  "pyarrow",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
