@@ -26,42 +26,56 @@ El proyecto está dividido en notebooks que siguen el flujo de la metodología:
 4.  **Business Impact:** Vinculación de los clusters con métricas financieras como el **GMV (Gross Merchandise Value)** y el análisis del embudo de conversión.
 
 ```
-├── data/               # (Nota: No subir los 67M de eventos, solo muestras o scripts de descarga)
-│   ├── raw/            # Enlaces a los datasets originales (Kaggle)
-│   └── processed/      # Bases agregadas (General, User-based, Time-based)
-│       ├── 201911
-│       └── 201912
+├── data/
+│   ├── categories/         # Carpetas de categorías por conjunto
+│   │   ├── evaluation_201912
+│   │   └── training_201911
+│   ├── processed/          # Bases agregadas y normalizadas
+│   │   ├── training_201911
+│   │   └── validation_201912
+│   └── raw/                # Datos originales procesados / fuentes
+│       ├── 2019-Dec-cleaned.parquet   # Vacío
+│       ├── 2019-Nov-cleaned.parquet   # Vacío
+│       └── source.txt
 ├── docs/               # Documentación oficial
 │   └── Modelado Multidimensional del Engagement en E-commerce Un Enfoque de Clustering Espectral basado en Correlaciones Ordinales.pdf
-├── notebooks/          # Jupyter Notebooks organizados por etapas
+├── models/               # Modelos, artefactos o checkpoints
+├── modulos_comprimidos/  # Wheels generados
+├── notebooks/
+│   ├── 00_Load_Data.ipynb
 │   ├── 01_EDA_Exploratory_Data_Analysis.ipynb
-│   ├── 02_Preprocessing_and_Feature_Engineering.ipynb
-│   ├── 03_Model_General_Spectral_Clustering.ipynb
-│   ├── 04_Model_User_Based.ipynb
-│   ├── 05_Model_Time_Based.ipynb
-│   └── 06_Validation_and_Projection_Dec.ipynb
-├── config.py               # Configuración (rutas de datos, hiperparámetros de K)
-├── features/             # Definición de métricas (Popularidad, Actividad, Lealtad) [6]
-├── src/                    # Carpeta con el núcleo lógico (el "motor" del TFM)
+│   ├── 02_Aggregation_Models.ipynb
+│   ├── 03_Model&Projection_General.ipynb
+│   ├── 04_Model&Projection_User_Based.ipynb
+│   ├── 05_Model&Projection_Time_Based.ipynb
+│   └── 06_Validation.ipynb
+├── results/
+│   ├── clusters/
+│   ├── EDA/
+│   └── validation_analysis/
+├── src/
 │   ├── __init__.py
-│   ├── data_loader.py      # Carga y limpieza de los 67M de eventos [4]
-│   ├── preprocessing.py    # Transformación Rank-dense y Z-score [7]
-│   ├── clustering.py       # Implementación del Spectral Clustering y Kendall Tau [8, 9]
-│   ├── evaluation       # Índices Silhouette, Calinski-Harabasz y Proyección [10, 11]
+│   ├── config.py
+│   ├── data_loader.py
+│   ├── plots.py
+│   ├── evaluation/
+│   │   ├── absence_time.py
+│   │   ├── gmv.py
+│   │   └── kpis_analysis.py
+│   ├── modelling/
+│   │   ├── __init__.py
+│   │   ├── similarity.py
+│   │   ├── spectral.py
+│   │   └── transforms.py
 │   ├── preprocessing/
 │   │   ├── __init__.py
-│   │   ├── base.py           # Lógica común (Rank-dense y Z-score)
-│   │   ├── general.py        # Agregación por categoría [3]
-│   │   ├── user_based.py     # Lógica de segmentos (Tourist a VIP) [4]
-│   │   └── time_based.py     # Ratios Weekday vs Weekend [5]
-│   ├── features         # Ingeniería de métricas (Popularidad, Actividad, Lealtad) [5, 6]
-│   ├── models/
-│   │   └── spectral.py       # Pipeline: Kendall Tau -> Laplaciano -> Clustering [7, 8]
+│   │   ├── base.py
+│   │   ├── general.py
+│   │   ├── time_based.py
+│   │   └── user_based.py
 │   └── utils/
-│       └── metrics.py        # Silhouette, Calinski-Harabasz [9, 10]
-├── results/            # Gráficos y tablas generadas
-│   ├── figures/        # Heatmaps, Dendrogramas, PCA plots
-│   └── tables/         # Métricas de validación y GMV
+│       ├── metrics.py
+│       └── style.py
 ├── .gitignore          # Para evitar subir archivos temporales o datos pesados
 ├── requirements.txt    # Librerías necesarias (pandas, scikit-learn, etc.)
 └── README.md           # Descripción principal del proyecto
