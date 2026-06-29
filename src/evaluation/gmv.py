@@ -49,7 +49,7 @@ def compute_category_gmv_summary(
         Ruta base del proyecto.
     source_folder : str
         Carpeta bajo workpath/categories donde están los ficheros, p.ej.
-        "categories_2019Nov".
+        "training_201911" o "validation_201912".
     category_codes : Iterable[str]
         Lista de códigos de categoría a procesar.
     output_path : Optional[str]

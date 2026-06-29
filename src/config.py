@@ -1,4 +1,4 @@
-# CATEGORIES_CODES = [
+# CATEGORY_CODES = [
 #     "electronics.smartphone",
 #     "appliances.sewing_machine",
 #     "appliances.kitchen.washer",
@@ -130,7 +130,7 @@
 #     "construction.tools.screw",
 # ]
 
-CATEGORIES_CODES = [
+CATEGORY_CODES = [
     "electronics.video.tv",
     "computers.components.memory",
     "computers.components.motherboard",

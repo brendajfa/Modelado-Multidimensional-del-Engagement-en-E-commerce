@@ -22,7 +22,7 @@ def calculate_absence_time(df_category: pd.DataFrame) -> float:
 def compute_absence_time_summary(
     workpath: str,
     category_codes: Iterable[str],
-    source_folder: str = "categories_2019Nov",
+    source_folder: str = "training_201911",
     show_progress: bool = True,
 ) -> pd.DataFrame:
     """

@@ -1,0 +1,111 @@
+
+<div style="padding: 1rem 0;font-family: var(--font-sans); color: var(--color-text-primary);" >
+  <h2 class="sr-only">Boxplot del cambio en absence time (Dic - Nov) por cluster</h2>
+
+  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 1.5rem;font-family: var(--font-sans); color: var(--color-text-primary);">
+    <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0;">
+      Cada caja muestra mediana, Q1-Q3 e IQR por cluster. La línea roja discontinua representa el valor 0 (sin cambio).
+    </p>
+  </div>
+
+  <div style="position: relative; width: 100%; height: 380px;">
+    <canvas id="boxChart" role="img" aria-label="Boxplot del cambio en absence time de diciembre a noviembre por cluster. Muestra la distribución de caídas o subidas por grupo.">Distribución de absence_drop por cluster.</canvas>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px; font-size: 12px; color: var(--color-text-secondary);">
+    <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 24px; height: 2px; background: #e24b4a; border-top: 2px dashed #e24b4a; display: inline-block;"></span>Sin cambio (0)</span>
+    <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #5DCAA5; opacity: 0.7;"></span>Distribución por cluster</span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@4.4.4/build/index.umd.min.js"></script>
+<script>
+const clusterData = {"0": [0.0, 0.12307620533291003, 0.0, 0.1574260649378978, 0.0, 0.5124858950561789, 0.0, 0.025386490275363993, 0.0, 0.2050014729159947, 0.0, -0.5039785148627924, 0.0, -0.5454166621567502], "1": [0.0, 0.030908019840332424, 0.0, 0.5002471131450875, 0.0, 0.36107880867795517, 0.0, 0.203565809639703, 0.0, 0.4264792156441973, 0.0, 0.02727484549096304, 0.0, 0.395175073721509, 0.0, 0.21881263761806996, 0.0, 0.1402994332587632, 0.0, 0.07105026021230387, 0.0, 0.10153549665398365, 0.0, 0.18278717568008995, 0.0, 0.6540948353322271, 0.0, 0.06628427306140994, 0.0, -0.0037478079996688396, 0.0, 0.17930093613570303, 0.0, 0.014032549497734359, 0.0, 0.22087070999036512, 0.0, 0.0146010812565453, 0.0, 0.0708014381230252, 0.0, -0.040596282988942356, 0.0, 0.20059375901440607, 0.0, 0.3233526514361763, 0.0, 0.24356512982184225, 0.0, 0.335564985306861], "2": [0.0, 0.34500311749533735, 0.0, 0.4204446932150303, 0.0, 0.6818099222784955, 0.0, 0.1953371426056788, 0.0, 0.3958253026578722, 0.0, 0.42151244133431454, 0.0, 0.4759434397253639, 0.0, 0.3309336132920051, 0.0, 0.1553144864802457, 0.0, 0.4092092293085224, 0.0, 0.44040222742139384, 0.0, 0.2849147070095481, 0.0, 0.22621822396506214, 0.0, 0.29713551826167106], "3": [0.0, 0.36882428871651884, 0.0, 0.2246204474212128, 0.0, 0.2738245213521919, 0.0, 0.6258263994795776, 0.0, 0.6639701414856214, 0.0, 1.0491033016873021, 0.0, 0.495237215325802, 0.0, 0.3851044829987136, 0.0, 0.3639193020877285, 0.0, 0.927672815991482, 0.0, 0.26597641151415674, 0.0, 0.7567547593629371, 0.0, 0.4581919197446792, 0.0, 0.14370982921422487, 0.0, 0.3175609553091766, 0.0, 0.16199065479667113, 0.0, 0.07844839665656345, 0.0, 0.5280018301509949, 0.0, -0.06665838252725687, 0.0, 0.6974188615172598, 0.0, 0.15445002325837903, 0.0, -0.18803991836273215, 0.0, 0.42935184986928016, 0.0, 0.3389515545386094, 0.0, -0.40559384139577104, 0.0, 0.35324008846184424, 0.0, 0.23918761484968953, 0.0, 0.36804551958748444, 0.0, 0.491415356646348, NaN, 0.0, 0.49764961920908163, 0.0, 0.7914141897350853, NaN, NaN, 0.0, 0.7480097979179424, 0.0, 0.7857263943041194], "4": [0.0, 0.8557263034343908, 0.0, 0.06217353795370939, 0.0, 0.026897939115978264, 0.0, 0.3833963026798729, 0.0, 0.06808287597962698, 0.0, 0.38860221097313413, 0.0, 0.13504790048439513, 0.0, -0.23980995928819748, 0.0, 0.0762421169848076, 0.0, -0.12170527252965674, 0.0, 0.07877171723345122, 0.0, 0.1769758077642697, 0.0, 0.32152301076017836, 0.0, 0.006502129910389287, 0.0, 0.1679125560964192, 0.0, 0.47224683716186006, 0.0, 0.2986010243146234, 0.0, 0.06805905648241906, 0.0, 0.03314425826843809, 0.0, 0.21990486860142783, 0.0, 0.03244387118456693, 0.0, 0.6133102619764117, 0.0, 0.21738781079566433, 0.0, 0.3174846027835077, 0.0, 0.21870638139686788, 0.0, 0.29269298914664765, 0.0, 0.22090207194727235, 0.0, 0.11704614963577609, 0.0, 0.3232753008051657, 0.0, 0.19827140411321875, 0.0, 0.021408221279699435, 0.0, 0.40981957743119196, 0.0, 0.3517593741114562, 0.0, 0.02593033946872947, 0.0, -0.07637139707471857, 0.0, 0.23318756022494147, 0.0, 0.17498183560948327, 0.0, 0.02748377820728687, 0.0, 0.25206043126790834, 0.0, 0.007521563267314124, 0.0, 0.15525555576189087, 0.0, 0.3047211062149061, 0.0, 0.38839371022504626, 0.0, 0.17375478642519326, 0.0, 0.46778442236475865, 0.0, 0.19317542863585968, 0.0, 0.236889150926953, 0.0, 0.2988183744284582]};
+
+
+const palette = ['#1D9E75','#378ADD','#BA7517','#D4537E'];
+
+const datasets = Object.entries(clusterData).map(([label, data], i) => ({
+  label,
+  data: [data],
+  backgroundColor: palette[i] + '55',
+  borderColor: palette[i],
+  borderWidth: 1.5,
+  outlierBackgroundColor: palette[i],
+  outlierRadius: 3,
+  medianColor: palette[i],
+  whiskerColor: palette[i],
+  lowerBackgroundColor: palette[i] + '33',
+  upperBackgroundColor: palette[i] + '33',
+}));
+
+const zeroLine = {
+  id: 'zeroLine',
+  afterDraw(chart) {
+    const { ctx, scales: { y } } = chart;
+    const yPos = y.getPixelForValue(0);
+    ctx.save();
+    ctx.beginPath();
+    ctx.setLineDash([6, 4]);
+    ctx.strokeStyle = '#e24b4a';
+    ctx.lineWidth = 1.5;
+    ctx.moveTo(chart.chartArea.left, yPos);
+    ctx.lineTo(chart.chartArea.right, yPos);
+    ctx.stroke();
+    ctx.restore();
+  }
+};
+
+new Chart(document.getElementById('boxChart'), {
+  type: 'boxplot',
+  data: {
+    labels: Object.keys(clusterData),
+    datasets: [{
+      label: 'absence_drop',
+      data: Object.values(clusterData),
+      backgroundColor: palette.map(c => c + '55'),
+      borderColor: palette,
+      borderWidth: 1.5,
+      outlierBackgroundColor: palette,
+      outlierRadius: 3,
+      medianColor: palette,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (item) => {
+            const v = item.raw;
+            if (!v) return '';
+            return [
+              `Mín: ${v.min}`,
+              `Q1: ${v.q1}`,
+              `Mediana: ${v.median}`,
+              `Q3: ${v.q3}`,
+              `Máx: ${v.max}`,
+            ];
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        title: { display: true, text: 'Cluster', color: '#888780', font: { size: 12 } },
+        grid: { color: 'rgba(136,135,128,0.15)' },
+        ticks: { color: '#888780', font: { size: 12 } }
+      },
+      y: {
+        title: { display: true, text: 'Cambio en Absence Time (Dic − Nov)', color: '#888780', font: { size: 12 } },
+        grid: { color: 'rgba(136,135,128,0.15)' },
+        ticks: { color: '#888780', font: { size: 12 } }
+      }
+    }
+  },
+  plugins: [zeroLine]
+});
+</script>

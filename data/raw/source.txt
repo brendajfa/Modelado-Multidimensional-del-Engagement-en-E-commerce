@@ -1,0 +1,4 @@
+https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store
+
+2019-Nov.csv.gz (2.69Gb)
+2019-Dec.csv.gz (2.74Gb)

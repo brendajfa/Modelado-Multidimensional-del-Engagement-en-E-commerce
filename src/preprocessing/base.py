@@ -39,7 +39,7 @@ class PreprocessorBase(ABC):
         self._define_reference()
         rows = []
         
-        for identifier in tqdm(config.CATEGORIES_CODES):
+        for identifier in tqdm(config.CATEGORY_CODES):
             input_path = self._get_input_path(identifier, train_eval)
             df = pd.read_parquet(input_path)
             print(f"Procesando: {identifier}")

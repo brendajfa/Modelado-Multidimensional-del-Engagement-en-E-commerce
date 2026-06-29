@@ -19,8 +19,8 @@ def _load_month(month_name: str) -> pd.DataFrame:
 
 
 def compute_cluster_kpi_reports(
-        df_nov: pd.DataFrame,
-        df_dec: pd.DataFrame
+    df_nov: pd.DataFrame,
+    df_dec: pd.DataFrame
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     # df_dec = _load_month("Dec")
     # df_nov = _load_month("Nov")
@@ -54,8 +54,8 @@ def compute_cluster_kpi_reports(
 
 
 def compute_category_elasticity_reports(
-        df_nov: pd.DataFrame,
-        df_dec: pd.DataFrame
+    df_nov: pd.DataFrame,
+    df_dec: pd.DataFrame
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     df_entero = pd.concat([df_nov, df_dec], ignore_index=True)
 

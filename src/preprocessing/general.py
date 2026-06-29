@@ -9,7 +9,7 @@ class GeneralPreprocessor(PreprocessorBase):
     
     def _define_reference(self):
         """En el modelo general no hay grupos de referencia."""
-        self.referencia = pd.DataFrame({"category_code": config.CATEGORIES_CODES})
+        self.referencia = pd.DataFrame({"category_code": config.CATEGORY_CODES})
 
     def _get_identifier_column(self) -> str:
         return "category_code"
